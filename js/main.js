@@ -75,4 +75,29 @@ $(function () {
 			bindHTMl();
 		}
 	})
+
+	//回到顶部
+	$('.toTop').on('click',function(){
+		let duration = 500,
+			 interval = 10,
+			 distance = $(window).scrollTop(),
+			 step = (distance / duration)*interval;
+		let timer = setInterval(()=>{
+			let toScrollTop = $(window).scrollTop();
+			if(toScrollTop <= 0){
+				clearInterval(timer);
+				window.onscroll = showBtn;
+				return;
+			}
+			toScrollTop -= step;
+			$(window).scrollTop(toScrollTop);
+		},interval);
+	});
+	$(window).on('scroll',showBtn);
+	function showBtn(){
+		let curTop = $(window).scrollTop(),
+				pageHeight = $(window).outerHeight(),
+				value = curTop >= pageHeight ? 'block' : 'none';
+		$('.toTop').css({display:value});
+	}
 });
